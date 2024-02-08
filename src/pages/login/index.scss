@@ -1,0 +1,82 @@
+@use 'sass:color';
+@import '../../colors';
+
+$button-border-radius: 4px;
+$text-input-border-radius: 4px;
+
+.card {
+  padding: 64px 32px;
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+  border-radius: 10px;
+}
+
+.card--vertical {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.card__header {
+  padding: 10px 0;
+}
+
+.card__header--center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card__header__span {
+  font-size: 1.4rem;
+  font-weight: 400;
+  letter-spacing: 2px;
+  color: rgba(black, 0.7);
+}
+
+.text-input {
+  position: relative;
+}
+
+.text-input__input {
+  border: thin solid rgba($secondary, 0.9);
+  border-radius: $text-input-border-radius;
+  padding: 10px;
+  min-width: 320px;
+
+  &:focus-visible {
+    outline: 2px solid rgba($tertiary, 0.9);
+  }
+}
+
+
+.text-input__label {
+  display: none;
+}
+
+
+.button {
+  padding: 10px;
+  border: none;
+  background-color: darken($tertiary, $amount: 10%);
+  border-radius: $button-border-radius;
+  color: white;
+
+  &:hover {
+    background-color: $tertiary;
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0)
+  }
+}
+
+.button--width-100 {
+  width: 100%;
+}
+
+.button--mt-10 {
+  margin-top: 10px;
+}
