@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
@@ -6,7 +6,7 @@ import './index.scss';
 import { UserCircleIcon } from '@heroicons/react/24/outline';
 import Card from '../../components/card';
 import '../../components/button/index.scss';
-import { POST } from '../../utils/utils';
+import { POST, GET } from '../../utils/utils';
 import errorToast from '../../components/toasts';
 
 function Form() {
@@ -61,6 +61,16 @@ function Form() {
 }
 
 export default function LoginPage() {
+  const navigate = useNavigate();
+  useEffect(() => {
+    (async () => {
+      const result = await GET('validate');
+      if (result.success) {
+        navigate('/dashboard');
+      }
+    })();
+  }, [navigate]);
+
   return (
     <main className="min-h-screen flex justify-center items-center">
       <Card>
