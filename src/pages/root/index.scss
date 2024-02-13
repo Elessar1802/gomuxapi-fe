@@ -1,0 +1,57 @@
+@import '../../common.scss';
+
+.sidebar {
+  background-color: $secondary;
+  position: relative;
+  padding: 24px 0;
+
+  &__link {
+    height: 48px;
+    display: flex;
+    align-items: center;
+  }
+
+  &__icons {
+    width: 4rem;
+  }
+
+  &__texts {
+    position: absolute;
+    height: 100%;
+    padding: 24px 32px;
+    z-index: -10;
+    top: 0;
+    left: 4rem;
+    background-color: $secondary;
+  }
+}
+
+.sidebar__texts--show {
+  @keyframes slidein {
+    from {
+      transform: translateX(-100%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+
+  transform: translateX(0);
+  animation: slidein;
+  animation-duration: 300ms;
+}
+
+.sidebar__texts--hide {
+  @keyframes slideout {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-100%);
+    }
+  }
+
+  transform: translateX(-100%);
+  animation: slideout;
+  animation-duration: 300ms;
+}
