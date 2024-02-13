@@ -10,7 +10,7 @@ import User from '../../../repo/User';
 
 export default function Contacts(): React.ReactNode {
   const [search, setSearch] = useState('');
-  const [results, setResults] = useState<User[]>([]);
+  const [results, setResults] = useState<User[] | null>(null);
 
   async function query() {
     try {
@@ -48,34 +48,38 @@ export default function Contacts(): React.ReactNode {
         </button>
       </div>
       <div className="mt-20 py-10 flex flex-wrap gap-4 justify-center">
-        {results.map((result: User) => (
-          <NavLink to={`/contacts/${result.id}`} key={result.id}>
-            <Card>
-              <div className="flex gap-6">
-                <img
-                  src={`https://randomuser.me/api/portraits/men/${result.id}.jpg`}
-                  className="h-24 w-24 rounded-full"
-                  alt="profile"
-                />
-                <div className="flex flex-col gap-2 justify-center">
-                  <div className="flex gap-4">
-                    <span className="text-gray-600 italic">Name: </span>
-                    <span>{result.name}</span>
-                  </div>
-                  <div className="flex gap-4">
-                    <span className="text-gray-600 italic">Phone: </span>
-                    <span>{result.phone}</span>
-                  </div>
+        {results === null ? (
+          <span>No results to show!</span>
+        ) : (
+          results.map((result: User) => (
+            <NavLink to={`/contacts/${result.id}`} key={result.id}>
+              <Card>
+                <div className="flex gap-6">
+                  <img
+                    src={`https://randomuser.me/api/portraits/men/${result.id}.jpg`}
+                    className="h-24 w-24 rounded-full"
+                    alt="profile"
+                  />
+                  <div className="flex flex-col gap-2 justify-center">
+                    <div className="flex gap-4">
+                      <span className="text-gray-600 italic">Name: </span>
+                      <span>{result.name}</span>
+                    </div>
+                    <div className="flex gap-4">
+                      <span className="text-gray-600 italic">Phone: </span>
+                      <span>{result.phone}</span>
+                    </div>
 
-                  <div className="flex gap-4">
-                    <span className="text-gray-600 italic bold">Designation: </span>
-                    <span>{capitalizeFirstLetter(result.role)}</span>
+                    <div className="flex gap-4">
+                      <span className="text-gray-600 italic bold">Designation: </span>
+                      <span>{capitalizeFirstLetter(result.role)}</span>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </Card>
-          </NavLink>
-        ))}
+              </Card>
+            </NavLink>
+          ))
+        )}
       </div>
       <ToastContainer />
     </main>
