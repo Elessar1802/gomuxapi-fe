@@ -5,11 +5,34 @@ import {
   ArchiveBoxIcon,
   XCircleIcon,
 } from '@heroicons/react/24/outline';
-import React from 'react';
-import { NavLink, Outlet } from 'react-router-dom';
+import { NavLink, Outlet, useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { GET } from '../../utils/utils';
+import User from '../../repo/User';
 import './index.scss';
+import UserContext from '../contexts';
+import Spinner from '../../components/spinner';
 
 export default function App(): React.ReactNode {
+  const navigate = useNavigate();
+  const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    (async () => {
+      let res = await GET('validate');
+      if (!res.success) {
+        navigate('/login');
+        return;
+      }
+      res = await GET(`users/${res.payload}`);
+      if (!res.success) {
+        navigate('/login');
+        return;
+      }
+      setUser(res.payload);
+    })();
+  }, [navigate]);
+
   function expandSidebar() {
     const element = document.getElementById('sidebar__texts') as HTMLElement;
     if (element.classList.contains('hidden')) {
@@ -43,7 +66,11 @@ export default function App(): React.ReactNode {
     { path: '/logout', icon: <XCircleIcon />, about: 'Logout' },
   ];
 
-  return (
+  return user === null ? (
+    <main className="min-h-screen w-full flex justify-center items-center">
+      <Spinner />
+    </main>
+  ) : (
     <>
       <nav className="min-h-screen fixed top-0 left-0 overflow-visible">
         <div className="sidebar flex min-h-screen">
@@ -95,9 +122,11 @@ export default function App(): React.ReactNode {
         </div>
       </nav>
       {/* this will display the children paths if they match  */}
-      <div className="pl-16 h-full w-full overflow-y-auto">
-        <Outlet />
-      </div>
+      <UserContext.Provider value={user}>
+        <div className="pl-16 h-full w-full overflow-y-auto">
+          <Outlet />
+        </div>
+      </UserContext.Provider>
     </>
   );
 }

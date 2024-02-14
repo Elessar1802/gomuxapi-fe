@@ -4,7 +4,7 @@ import { ToastContainer } from 'react-toastify';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import { GET } from '../../../utils/utils';
 import '../../../components/button/index.scss';
-import errorToast from '../../../components/toasts';
+import { errorToast } from '../../../components/toasts';
 import Card from '../../../components/card';
 import User from '../../../repo/User';
 

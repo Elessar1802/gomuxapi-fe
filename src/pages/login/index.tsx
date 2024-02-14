@@ -7,7 +7,7 @@ import { UserCircleIcon } from '@heroicons/react/24/outline';
 import Card from '../../components/card';
 import '../../components/button/index.scss';
 import { POST, GET } from '../../utils/utils';
-import errorToast from '../../components/toasts';
+import { errorToast } from '../../components/toasts';
 
 function Form() {
   const navigate = useNavigate();
@@ -23,7 +23,7 @@ function Form() {
     try {
       const res = await POST('auth', JSON.stringify(credentials));
       if (res.success) {
-        navigate('/dashboard');
+        navigate('/');
         return;
       }
       errorToast('Wrong credentials!');
@@ -66,7 +66,7 @@ export default function LoginPage() {
     (async () => {
       const result = await GET('validate');
       if (result.success) {
-        navigate('/dashboard');
+        navigate('/');
       }
     })();
   }, [navigate]);
