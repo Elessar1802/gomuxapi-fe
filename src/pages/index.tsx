@@ -9,7 +9,7 @@ import Profile from './root/profile';
 import Contacts from './root/contacts';
 import Contact from './root/contacts/contact';
 import Records from './root/records';
-// import { GET } from '../utils/utils';
+import Enroll from './root/enroll';
 
 interface Route {
   path: string;
@@ -30,6 +30,7 @@ const routes: Route[] = [
         children: [
           { path: 'profile', element: <Profile />, children: undefined },
           { path: 'dashboard', element: <Dashboard />, children: undefined },
+          { path: 'enroll', element: <Enroll />, children: undefined },
           { path: 'contacts/:id', element: <Contact />, children: undefined },
           { path: 'contacts', element: <Contacts />, children: undefined },
           { path: 'records', element: <Records />, children: undefined },

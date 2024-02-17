@@ -8,7 +8,7 @@ import {
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import { GET } from '../../utils/utils';
-import User from '../../repo/User';
+import { User } from '../../types';
 import './index.scss';
 import UserContext from '../contexts';
 import Spinner from '../../components/spinner';
@@ -56,10 +56,11 @@ export default function App(): React.ReactNode {
     about: string;
   }
 
-  const navlinks: NavLinks[] = [
+  const navlinks: (NavLinks | undefined)[] = [
     { path: '/profile', icon: <UserIcon />, about: 'Profile' },
     { spacer: true, path: '1', about: '' },
     { path: '/dashboard', icon: <HomeIcon />, about: 'Dashboard' },
+    user?.role === 'principal' ? { path: '/enroll', icon: <UserIcon />, about: 'Add User' } : undefined,
     { path: '/contacts', icon: <AtSymbolIcon />, about: 'Contacts' },
     { path: '/records', icon: <ArchiveBoxIcon />, about: 'Records' },
     { expander: true, path: '2', about: '' },
@@ -72,15 +73,18 @@ export default function App(): React.ReactNode {
     </main>
   ) : (
     <>
-      <nav className="min-h-screen fixed top-0 left-0 overflow-visible">
-        <div className="sidebar flex min-h-screen">
-          <div
-            className="sidebar__icons flex flex-col items-center"
-            onMouseOver={expandSidebar}
-            onFocus={expandSidebar}
-            onMouseLeave={closeSidebar}
-          >
+      <nav
+        className="min-h-screen fixed top-0 left-0 overflow-visible"
+        onMouseLeave={closeSidebar}
+        onMouseOver={expandSidebar}
+        onFocus={expandSidebar}
+      >
+        <div
+          className="sidebar flex min-h-screen"
+        >
+          <div className="sidebar__icons flex flex-col">
             {navlinks.map((el) => {
+              if (el === undefined) return undefined;
               if (el.expander) {
                 return (
                   <div key={el.path} className="flex-grow">
@@ -92,15 +96,21 @@ export default function App(): React.ReactNode {
                 return <div key={el.path} className="pt-6" />;
               }
               return (
-                <NavLink key={el.path} to={el.path} className="sidebar__link">
-                  <div className="h-6 w-full flex justify-center">{el.icon}</div>
+                <NavLink key={el.path} to={el.path} className="sidebar__link flex justify-center items-center">
+                  <div className="h-6 w-6">
+                    {el.icon}
+                  </div>
                 </NavLink>
               );
             })}
           </div>
-          <div id="sidebar__texts" className="sidebar__texts sidebar__texts--hide hidden">
+          <div
+            id="sidebar__texts"
+            className="sidebar__texts sidebar__texts--hide hidden will-change-transform"
+          >
             <div className="flex flex-col h-full">
               {navlinks.map((el) => {
+                if (el === undefined) return undefined;
                 if (el.expander) {
                   return (
                     <div key={el.path} className="flex-grow">
@@ -112,9 +122,11 @@ export default function App(): React.ReactNode {
                   return <div key={el.path} className="pt-6" />;
                 }
                 return (
-                  <span key={el.path} className="text-xl sidebar__link">
-                    {el.about}
-                  </span>
+                  <NavLink key={el.path} to={el.path} className="text-xl sidebar__link w-full">
+                    <div className="px-8">
+                      {el.about}
+                    </div>
+                  </NavLink>
                 );
               })}
             </div>

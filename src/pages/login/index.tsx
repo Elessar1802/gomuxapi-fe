@@ -23,7 +23,7 @@ function Form() {
     try {
       const res = await POST('auth', JSON.stringify(credentials));
       if (res.success) {
-        navigate('/');
+        navigate('/dashboard');
         return;
       }
       errorToast('Wrong credentials!');
@@ -66,7 +66,7 @@ export default function LoginPage() {
     (async () => {
       const result = await GET('validate');
       if (result.success) {
-        navigate('/');
+        navigate('/dashboard');
       }
     })();
   }, [navigate]);
