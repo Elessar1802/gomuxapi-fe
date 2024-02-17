@@ -5,14 +5,40 @@ import { errorToast } from '../../../components/toasts';
 import {
   Attendances,
   AttendanceResourceType,
-  extractAttendanceDays,
   getAttendance,
   getFormattedDate,
 } from '../../../utils/attendance';
-import CalendarComponent from '../../../components/calendar';
-import { MonthEnumReverse } from '../../../types';
-import Card from '../../../components/card';
+// import CalendarComponent from '../../../components/calendar';
+// import { MonthEnumReverse } from '../../../types';
+// import Card from '../../../components/card';
 import UserContext from '../../contexts';
+
+function UserAttendanceTable({ records }: { records: Attendances }) {
+  return (
+    <table className="w-2/3 text-sm text-left text-gray-500">
+      <thead className="text-xs text-gray-700 uppercase bg-gray-100">
+        <tr>
+          <th className="px-6 py-3" scope="col">ID</th>
+          <th className="px-6 py-3" scope="col">Date</th>
+          <th className="px-6 py-3" scope="col">First In</th>
+          <th className="px-6 py-3" scope="col">First Out</th>
+          <th className="px-6 py-3" scope="col">Duration</th>
+        </tr>
+      </thead>
+      <tbody>
+        {records.map((el) => (
+          <tr className="bg-white border-b" key={el.date}>
+            <td className="px-6 py-3">{el.id}</td>
+            <td className="px-6 py-3">{el.date}</td>
+            <td className="px-6 py-3">{el.first_in}</td>
+            <td className="px-6 py-3">{el.last_out}</td>
+            <td className="px-6 py-3">{el.duration}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
+}
 
 export default function Records(): React.ReactNode {
   const user = useContext(UserContext);
@@ -103,12 +129,7 @@ export default function Records(): React.ReactNode {
         {results === null ? (
           <span>No results to show!</span>
         ) : (
-          <Card>
-            <CalendarComponent
-              attendance={extractAttendanceDays(results)}
-              month={MonthEnumReverse[startDate.getMonth()]}
-            />
-          </Card>
+          <UserAttendanceTable records={results} />
         )}
       </div>
       <ToastContainer />
