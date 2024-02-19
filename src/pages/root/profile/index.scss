@@ -1,0 +1,15 @@
+.mismatch {
+  position: relative;
+}
+
+.mismatch::after {
+  position: absolute;
+  top: 50%;
+  right: 5%;
+  transform: translateY(-50%) translateX(-50%);
+  width: 10px;
+  height: 10px;
+  border-radius: 100%;
+  background-color: red;
+  content: '';
+}

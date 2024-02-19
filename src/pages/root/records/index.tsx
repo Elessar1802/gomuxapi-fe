@@ -8,9 +8,6 @@ import {
   getAttendance,
   getFormattedDate,
 } from '../../../utils/attendance';
-// import CalendarComponent from '../../../components/calendar';
-// import { MonthEnumReverse } from '../../../types';
-// import Card from '../../../components/card';
 import UserContext from '../../contexts';
 
 function UserAttendanceTable({ records }: { records: Attendances }) {

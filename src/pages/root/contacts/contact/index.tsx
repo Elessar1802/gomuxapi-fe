@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Card from '../../../../components/card';
-import User from '../../../../repo/User';
+import { User } from '../../../../types';
 import { GET } from '../../../../utils/utils';
 
 export default function Contact(): React.ReactNode {

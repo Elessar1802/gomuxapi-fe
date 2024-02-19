@@ -1,5 +1,4 @@
 import React from 'react';
-// import { useNavigate } from 'react-router-dom';
 import LoginPage from './login';
 import Logout from './logout';
 import Error from '../components/error';
@@ -19,27 +18,21 @@ interface Route {
 }
 
 const routes: Route[] = [
+  { path: '/login', element: <LoginPage />, children: undefined },
   {
     path: '/',
-    element: undefined,
+    element: <App />,
     children: [
-      { path: '/login', element: <LoginPage />, children: undefined },
-      {
-        path: '/',
-        element: <App />,
-        children: [
-          { path: 'profile', element: <Profile />, children: undefined },
-          { path: 'dashboard', element: <Dashboard />, children: undefined },
-          { path: 'enroll', element: <Enroll />, children: undefined },
-          { path: 'contacts/:id', element: <Contact />, children: undefined },
-          { path: 'contacts', element: <Contacts />, children: undefined },
-          { path: 'records', element: <Records />, children: undefined },
-        ],
-      },
-      { path: '/logout', element: <Logout />, children: undefined },
+      { path: 'profile', element: <Profile />, children: undefined },
+      { path: 'dashboard', element: <Dashboard />, children: undefined },
+      { path: 'enroll', element: <Enroll />, children: undefined },
+      { path: 'contacts/:id', element: <Contact />, children: undefined },
+      { path: 'contacts', element: <Contacts />, children: undefined },
+      { path: 'records', element: <Records />, children: undefined },
     ],
     errorElement: <Error />,
   },
+  { path: '/logout', element: <Logout />, children: undefined },
 ];
 
 export default routes;

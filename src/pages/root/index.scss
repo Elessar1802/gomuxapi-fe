@@ -9,6 +9,11 @@
     height: 48px;
     display: flex;
     align-items: center;
+
+    &--active {
+      background-color: darken($secondary, +10%);
+      color: white;
+    }
   }
 
   &__icons {
