@@ -46,8 +46,14 @@ export default function Dashboard(): React.ReactNode {
   return (
     <main className="min-h-screen flex flex-col gap-20">
       <section className="flex items-center px-20 mt-20">
-        <div className="flex-grow text-xl">
-          <DateComponent />
+        <div className="flex flex-col gap-4 flex-grow">
+          <span className="font-bold text-lg">
+            Welcome,
+            {` ${user.name}`}
+          </span>
+          <div className="text-xl">
+            <DateComponent />
+          </div>
         </div>
         {user?.role === 'principal' ? undefined : (
           <div className="flex gap-6">
@@ -63,10 +69,13 @@ export default function Dashboard(): React.ReactNode {
       {user.role === 'principal' ? undefined : (
         <section className="flex justify-center items-center">
           <Card>
-            <CalendarComponent
-              attendance={attendance ? extractAttendanceDays(attendance) : []}
-              month={MonthEnumReverse[new Date().getMonth()]}
-            />
+            <div className="flex flex-col gap-10 px-10 items-center">
+              <span className="text-2xl">{`${MonthEnumReverse[new Date().getMonth()]}'s Attendance Record`}</span>
+              <CalendarComponent
+                attendance={attendance ? extractAttendanceDays(attendance) : []}
+                month={MonthEnumReverse[new Date().getMonth()]}
+              />
+            </div>
           </Card>
         </section>
       )}

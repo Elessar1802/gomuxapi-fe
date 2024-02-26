@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
@@ -11,18 +11,20 @@ import { User } from '../../../types';
 export default function Contacts(): React.ReactNode {
   const [search, setSearch] = useState('');
   const [results, setResults] = useState<User[] | null>(null);
-
-  async function query() {
-    try {
-      const result = await GET(`users?name=${search}`);
-      if (!result.success) {
-        errorToast('Request failed!');
-      }
-      setResults(result.payload);
-    } catch {
-      errorToast('Internal Error!');
+  // NOTE: since we are reusing the query function in the useEffect,
+  // we need to make sure the function is cached between re-renders.
+  // By default each function declaration returns a new function in js
+  const query = useCallback(async (sc: string) => {
+    const result = await GET(`users?name=${sc}`);
+    if (!result.success) {
+      errorToast('Request failed!');
     }
-  }
+    setResults(result.payload);
+  }, [setResults]);
+
+  useEffect(() => {
+    query('');
+  }, [query]);
 
   function capitalizeFirstLetter(s: string) {
     return s.charAt(0).toUpperCase() + s.slice(1);
@@ -40,7 +42,7 @@ export default function Contacts(): React.ReactNode {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
-        <button type="button" className="btn" onClick={query} aria-label="search-button">
+        <button type="button" className="btn" onClick={() => query(search)} aria-label="search-button">
           <div className="flex gap-4">
             <MagnifyingGlassIcon className="h-6 w-6" />
             <span>SEARCH</span>

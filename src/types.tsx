@@ -25,7 +25,9 @@ export const MonthEnumReverse = {
   9: 'Oct',
   10: 'Nov',
   11: 'Dec',
-} as const;
+} as {
+  [key: number]: Month,
+};
 export type Month = keyof typeof MonthEnum;
 
 export interface User {

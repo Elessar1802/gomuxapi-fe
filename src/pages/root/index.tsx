@@ -5,7 +5,12 @@ import {
   ArchiveBoxIcon,
   XCircleIcon,
 } from '@heroicons/react/24/outline';
-import { NavLink, Outlet, useNavigate } from 'react-router-dom';
+import {
+  NavLink,
+  Outlet,
+  useLocation,
+  useNavigate,
+} from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import { GET } from '../../utils/utils';
 import { User } from '../../types';
@@ -14,6 +19,7 @@ import UserContext from '../contexts';
 import Spinner from '../../components/spinner';
 
 export default function App(): React.ReactNode {
+  const location = useLocation();
   const navigate = useNavigate();
   const [user, setUser] = useState<User | null>(null);
 
@@ -79,9 +85,7 @@ export default function App(): React.ReactNode {
         onMouseOver={expandSidebar}
         onFocus={expandSidebar}
       >
-        <div
-          className="sidebar flex min-h-screen"
-        >
+        <div className="sidebar flex min-h-screen">
           <div className="sidebar__icons flex flex-col">
             {navlinks.map((el) => {
               if (el === undefined) return undefined;
@@ -96,18 +100,17 @@ export default function App(): React.ReactNode {
                 return <div key={el.path} className="pt-6" />;
               }
               return (
-                <NavLink key={el.path} to={el.path} className="sidebar__link flex justify-center items-center">
-                  <div className="h-6 w-6">
-                    {el.icon}
-                  </div>
+                <NavLink
+                  key={el.path}
+                  to={el.path}
+                  className={`sidebar__link flex justify-center items-center ${el.path === location.pathname ? 'sidebar__link--active' : ''}`}
+                >
+                  <div className="h-6 w-6">{el.icon}</div>
                 </NavLink>
               );
             })}
           </div>
-          <div
-            id="sidebar__texts"
-            className="sidebar__texts sidebar__texts--hide hidden will-change-transform"
-          >
+          <div id="sidebar__texts" className="sidebar__texts sidebar__texts--hide hidden will-change-transform">
             <div className="flex flex-col h-full">
               {navlinks.map((el) => {
                 if (el === undefined) return undefined;
@@ -122,10 +125,8 @@ export default function App(): React.ReactNode {
                   return <div key={el.path} className="pt-6" />;
                 }
                 return (
-                  <NavLink key={el.path} to={el.path} className="text-xl sidebar__link w-full">
-                    <div className="px-8">
-                      {el.about}
-                    </div>
+                  <NavLink key={el.path} to={el.path} className={`text-xl sidebar__link w-full  ${el.path === location.pathname ? 'sidebar__link--active' : ''}`}>
+                    <div className="px-8">{el.about}</div>
                   </NavLink>
                 );
               })}
