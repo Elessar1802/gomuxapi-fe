@@ -4,6 +4,9 @@ import { GET } from './utils';
 export type Attendance = {
   id: string,
   date: string,
+  first_in: string,
+  last_out: string,
+  duration: string,
 };
 
 export type Attendances = Attendance[];
