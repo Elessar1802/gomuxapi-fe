@@ -4,9 +4,9 @@ import { ToastContainer } from 'react-toastify';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import { GET } from '../../../utils/utils';
 import '../../../components/button/index.scss';
-import errorToast from '../../../components/toasts';
+import { errorToast } from '../../../components/toasts';
 import Card from '../../../components/card';
-import User from '../../../repo/User';
+import { User } from '../../../types';
 
 export default function Contacts(): React.ReactNode {
   const [search, setSearch] = useState('');
@@ -34,7 +34,7 @@ export default function Contacts(): React.ReactNode {
         <input
           id="search"
           type="text"
-          className="bg-white w-1/2"
+          className="bg-white w-1/2 block rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
           aria-label="search"
           placeholder="Enter user id or name"
           value={search}

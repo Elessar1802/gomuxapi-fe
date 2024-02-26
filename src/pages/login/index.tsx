@@ -7,7 +7,7 @@ import { UserCircleIcon } from '@heroicons/react/24/outline';
 import Card from '../../components/card';
 import '../../components/button/index.scss';
 import { POST, GET } from '../../utils/utils';
-import errorToast from '../../components/toasts';
+import { errorToast } from '../../components/toasts';
 
 function Form() {
   const navigate = useNavigate();
